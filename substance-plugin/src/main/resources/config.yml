@@ -1,0 +1,5 @@
+resourcePack:
+  modelMaterial: STRUCTURE_VOID # Any material not used by other plugins
+misc:
+  hurtColor: true
+  spawnEggs: true

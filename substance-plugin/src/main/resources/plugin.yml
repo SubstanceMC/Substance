@@ -1,0 +1,7 @@
+name: Substance
+version: 0.1.0-UNUSABLE
+main: org.substancemc.substance.SubstancePlugin
+api-version: 1.20
+author: SubstanceMC
+description: Plugin to add lagfree custom entities to java vanilla minecraft
+website: https://github.com/SubstanceMC
