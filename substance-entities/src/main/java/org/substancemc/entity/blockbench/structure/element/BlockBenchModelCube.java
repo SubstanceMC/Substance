@@ -6,12 +6,9 @@ import org.substancemc.core.resourcepack.structure.minecraft.model.ModelElementF
 
 public class BlockBenchModelCube extends ModelCube {
     private String name;
-    private double[] from;
-    private double[] to;
     private int autouv;
     private int color;
     private double[] origin;
-    private ModelElementFacing faces;
     private String uuid;
     private String type;
 

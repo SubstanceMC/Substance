@@ -1,6 +1,7 @@
 package org.substancemc.entity.resourcepack.generator.model;
 
 import com.google.gson.JsonPrimitive;
+import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.blockbench.error.BlockBenchParseException;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
@@ -40,6 +41,9 @@ public class EntityModelGeneratorPreProcessor implements GeneratorPreProcessor<B
         } catch (BlockBenchParseException e) {
             throw new RuntimeException(e);
         }
+        processed.keySet().forEach(modelFile -> {
+            SubstanceEntityAddon.get().getBlockBenchManager().addModelLocator(modelFile.getResourceLocator());
+        });
         return processed;
     }
 }

@@ -1,9 +1,9 @@
 package org.substancemc.core.resourcepack.structure.minecraft.model;
 
 public class ModelCube {
-    private double[] from;
-    private double[] to;
-    private ModelElementFacing faces;
+    protected double[] from;
+    protected double[] to;
+    protected ModelElementFacing faces;
 
     public ModelCube(double[] from, double[] to, ModelElementFacing faces)
     {

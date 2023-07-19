@@ -1,5 +1,5 @@
 resourcePack:
-  modelMaterial: STRUCTURE_VOID # Any material not used by other plugins
+  modelMaterial: LEATHER_HORSE_ARMOR # Any material not used by other plugins
 misc:
   hurtColor: true
   spawnEggs: true

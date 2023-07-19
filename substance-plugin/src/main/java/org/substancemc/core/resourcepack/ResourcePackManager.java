@@ -1,6 +1,7 @@
 package org.substancemc.core.resourcepack;
 
 import org.substancemc.core.SubstancePlugin;
+import org.substancemc.core.resourcepack.generator.atlas.ResourcePackAtlasGenerator;
 import org.substancemc.core.resourcepack.structure.minecraft.atlas.ResourcePackAtlasEntry;
 import org.substancemc.core.util.structure.SubstanceManager;
 import org.apache.commons.io.FileUtils;
@@ -16,9 +17,12 @@ public class ResourcePackManager implements SubstanceManager {
 
     private final HashMap<String, List<ResourcePackAtlasEntry>> atlases = new HashMap<>();
     private final List<ResourcePackOperation> operations = new ArrayList<>();
+
+    private final ResourcePackAtlasGenerator atlasGenerator = new ResourcePackAtlasGenerator();
     @Override
     public void load() {
         operations.forEach(ResourcePackOperation::operate);
+        atlases.entrySet().forEach(atlasGenerator::generate);
     }
 
 

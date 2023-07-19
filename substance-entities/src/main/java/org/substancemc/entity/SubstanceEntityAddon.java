@@ -1,6 +1,7 @@
 package org.substancemc.entity;
 
 import org.substancemc.core.SubstancePlugin;
+import org.substancemc.core.addon.AddonManager;
 import org.substancemc.core.addon.SubstanceAddon;
 import org.substancemc.entity.blockbench.BlockBenchManager;
 import org.substancemc.entity.resourcepack.operations.EntityAddonResourcePackOperation;
@@ -15,6 +16,11 @@ public class SubstanceEntityAddon implements SubstanceAddon {
     @Override
     public String getId() {
         return "substance-entity";
+    }
+
+    @Override
+    public String[] getAuthors() {
+        return new String[]{"SubstanceMC"};
     }
 
     private BlockBenchManager blockBenchManager;
@@ -37,6 +43,9 @@ public class SubstanceEntityAddon implements SubstanceAddon {
         return blockBenchManager;
     }
 
-
+    public static SubstanceEntityAddon get()
+    {
+        return SubstancePlugin.get().getAddonManager().getAddon(AddonManager.ENTITY_ADDON);
+    }
 
 }
