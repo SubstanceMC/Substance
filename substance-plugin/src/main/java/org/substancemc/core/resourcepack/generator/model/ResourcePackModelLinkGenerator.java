@@ -13,7 +13,7 @@ public class ResourcePackModelLinkGenerator implements ResourcePackGenerator<Lis
     @Override
     public void generate(List<String> context) {
         ResourcePackModelLink link = new ResourcePackModelLink(SubstancePlugin.get().getResourcePackManager().getModelMaterial(), getProcessor().process(context));
-        ResourcePackFile file = new ResourcePackFile("minecraft/item/" + SubstancePlugin.get().getResourcePackManager().getModelMaterial().toString().toLowerCase() + ".json");
+        ResourcePackFile file = new ResourcePackFile("minecraft/models/item/" + SubstancePlugin.get().getResourcePackManager().getModelMaterial().toString().toLowerCase() + ".json");
         new GsonFileWriter<ResourcePackModelLink>().write(file.getFile(), link);
     }
     @Override

@@ -1,10 +1,12 @@
 package org.substancemc.entity.resourcepack;
 
+import org.substancemc.core.SubstancePlugin;
+import org.substancemc.core.resourcepack.structure.minecraft.model.ModelElementFacingInformation;
+import org.substancemc.core.resourcepack.structure.substance.ResourcePackModel;
+import org.substancemc.core.resourcepack.structure.substance.ResourcePackModelCube;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
 import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelTexture;
-import org.substancemc.core.resourcepack.structure.substance.ResourcePackModel;
-import org.substancemc.core.resourcepack.structure.substance.ResourcePackModelCube;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,6 @@ public class BlockBenchResourcePackModel extends ResourcePackModel {
             elements[i] = new ResourcePackModelCube(cubes.get(i));
         }
         setElements(elements);
-        setTextureSize(new int[] {parentModel.getResolution().getWidth(), parentModel.getResolution().getHeight()});
     }
+
 }

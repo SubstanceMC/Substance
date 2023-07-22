@@ -1,5 +1,7 @@
 package org.substancemc.entity.blockbench.structure;
 
+import com.google.gson.JsonPrimitive;
+import org.checkerframework.checker.units.qual.A;
 import org.substancemc.entity.blockbench.error.BlockBenchParseException;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelBone;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
@@ -8,6 +10,8 @@ import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelResolu
 import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelTexture;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class BlockBenchModel {
@@ -18,6 +22,8 @@ public class BlockBenchModel {
     private BlockBenchModelCube[] elements;
 
     private BlockBenchModelResolution resolution;
+
+    private final transient HashMap<BlockBenchModelBone, List<BlockBenchModelCube>> structure = new HashMap<>();
 
     public BlockBenchModelResolution getResolution()
     {
@@ -91,6 +97,24 @@ public class BlockBenchModel {
 
     public void setBones(BlockBenchModelBone[] bones) {
         this.outliner = bones;
+    }
+
+    public HashMap<BlockBenchModelBone, List<BlockBenchModelCube>> getStructure()
+    {
+        if(structure.isEmpty())
+        {
+            try {
+                for(BlockBenchModelBone bone : getBones())
+                {
+                    List<BlockBenchModelCube> children = new ArrayList<>();
+                    Arrays.stream(getCubes()).filter(cube -> bone.getCubeChildren().contains(new JsonPrimitive(cube.getUUID()))).forEach(children::add);
+                    structure.put(bone, children);
+                }
+            } catch (BlockBenchParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return structure;
     }
 
 }

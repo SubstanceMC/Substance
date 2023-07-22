@@ -1,8 +1,12 @@
 package org.substancemc.core;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.C;
 import org.substancemc.core.addon.AddonManager;
+import org.substancemc.core.compatibility.CompatibilityManager;
 import org.substancemc.core.resourcepack.ResourcePackManager;
+import org.substancemc.core.util.resource.ResourceExtractor;
+import org.substancemc.core.util.resource.SubstanceResourceConstants;
 
 public class SubstancePlugin extends JavaPlugin {
 
@@ -10,13 +14,16 @@ public class SubstancePlugin extends JavaPlugin {
 
     private ResourcePackManager resourcePackManager;
     private AddonManager addonManager;
+    private CompatibilityManager compatibilityManager;
+    private ResourceExtractor resourceExtractor;
 
     public void onEnable()
     {
         instance = this;
         addonManager = new AddonManager();
         resourcePackManager = new ResourcePackManager();
-        saveDefaultConfig();
+        compatibilityManager = new CompatibilityManager();
+        resourceExtractor = new ResourceExtractor(SubstanceResourceConstants.RESOURCE_LOCATIONS);
         loadAll();
     }
 
@@ -24,10 +31,12 @@ public class SubstancePlugin extends JavaPlugin {
     {
         addonManager.load();
         resourcePackManager.load();
+        compatibilityManager.load();
     }
 
     private void unloadAll()
     {
+        compatibilityManager.unload();
         resourcePackManager.unload();
         addonManager.unload();
     }
@@ -51,6 +60,16 @@ public class SubstancePlugin extends JavaPlugin {
     public ResourcePackManager getResourcePackManager()
     {
         return resourcePackManager;
+    }
+
+    public CompatibilityManager getCompatibilityManager()
+    {
+        return compatibilityManager;
+    }
+
+    public ResourceExtractor getResourceExtractor()
+    {
+        return resourceExtractor;
     }
 
     public static SubstancePlugin get()

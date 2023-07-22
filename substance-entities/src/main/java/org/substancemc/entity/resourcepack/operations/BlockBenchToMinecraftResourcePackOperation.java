@@ -22,7 +22,7 @@ public class BlockBenchToMinecraftResourcePackOperation implements ResourcePackO
 
     @Override
     public void operate() {
-        models.forEach(modelGenerator::generate);
         models.forEach(textureGenerator::generate);
+        models.forEach(modelGenerator::generate);
     }
 }

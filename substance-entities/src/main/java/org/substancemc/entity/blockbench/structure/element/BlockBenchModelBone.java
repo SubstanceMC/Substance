@@ -13,6 +13,9 @@ public class BlockBenchModelBone {
     private double[] origin;
     private int color;
     private String uuid;
+
+    //The needed zoom to still render this cube (e.g. Bone holding the body of a mob that is bigger than 2 blocks)
+    private transient double zoom;
     private boolean visibility;
     private int autouv;
     private JsonElement[] children;
@@ -65,6 +68,16 @@ public class BlockBenchModelBone {
         this.autouv = autoUV;
     }
 
+    public double getZoom()
+    {
+        return zoom;
+    }
+
+    public void setZoom(double zoom)
+    {
+        this.zoom = zoom;
+    }
+
     public List<JsonElement> getCubeChildren() {
         return Arrays.stream(children).filter(JsonElement::isJsonPrimitive).toList();
     }
@@ -83,5 +96,7 @@ public class BlockBenchModelBone {
     public void setChildren(JsonElement[] children) {
         this.children = children;
     }
+
+
 
 }

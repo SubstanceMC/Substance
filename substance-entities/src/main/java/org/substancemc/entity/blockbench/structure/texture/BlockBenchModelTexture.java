@@ -7,9 +7,21 @@ public class BlockBenchModelTexture {
 
     private String name;
 
+    private transient int resolution;
+
+    public int getResolution()
+    {
+        return resolution;
+    }
+
+    public void setResolution(int resolution)
+    {
+        this.resolution = resolution;
+    }
+
     public String getName()
     {
-        return name;
+        return name.toLowerCase();
     }
 
     public void setName(String name)

@@ -57,4 +57,19 @@ public class ModelElementFacing {
         this.down = down;
     }
 
+    public ModelElementFacingInformation[] getAllFacings()
+    {
+        return new ModelElementFacingInformation[] {north, east, south, west, up, down};
+    }
+
+    public void setAllFacings(ModelElementFacingInformation[] facings)
+    {
+        this.north = facings[0];
+        this.east = facings[1];
+        this.south = facings[2];
+        this.west = facings[3];
+        this.up = facings[4];
+        this.down = facings[5];
+    }
+
 }

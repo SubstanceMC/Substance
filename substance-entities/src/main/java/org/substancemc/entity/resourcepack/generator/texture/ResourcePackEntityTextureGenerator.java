@@ -1,5 +1,6 @@
 package org.substancemc.entity.resourcepack.generator.texture;
 
+import org.checkerframework.checker.units.qual.A;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelTexture;
 import org.substancemc.core.SubstancePlugin;
@@ -10,35 +11,31 @@ import org.substancemc.core.util.file.ImageConverter;
 import org.substancemc.core.util.file.ImageTinter;
 
 import java.awt.*;
+import java.util.*;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public class ResourcePackEntityTextureGenerator implements GeneratorPreProcessor<BlockBenchModel, Map<String, String>>, ResourcePackGenerator<BlockBenchModel, Map<String, String>> {
+public class ResourcePackEntityTextureGenerator implements GeneratorPreProcessor<BlockBenchModel, List<BlockBenchModelTexture>>, ResourcePackGenerator<BlockBenchModel, List<BlockBenchModelTexture>> {
 
 
     @Override
-    public GeneratorPreProcessor<BlockBenchModel, Map<String, String>> getProcessor() {
+    public GeneratorPreProcessor<BlockBenchModel, List<BlockBenchModelTexture>> getProcessor() {
         return this;
     }
 
     @Override
-    public Map<String, String> process(BlockBenchModel model) {
-        Map<String, String> processed = new HashMap<>();
-        for(BlockBenchModelTexture texture : model.getTextures())
-        {
-            processed.put(texture.getSource(), texture.getName());
-        }
-        return processed;
+    public List<BlockBenchModelTexture> process(BlockBenchModel model) {
+        return new ArrayList<>(Arrays.asList(model.getTextures()));
     }
 
     @Override
     public void generate(BlockBenchModel model) {
         boolean withHurtColor = SubstancePlugin.get().getConfig().getBoolean("misc.hurtColor");
-        Map<String, String> processed = getProcessor().process(model);
-        processed.keySet().forEach(texture -> {
-            String name = processed.get(texture);
-            BufferedImage modelTexture = new ImageConverter(texture).convert(new ResourcePackTextureFile("entity/" + name));
+        List<BlockBenchModelTexture> processed = getProcessor().process(model);
+        processed.forEach(texture -> {
+            String name = texture.getName();
+            BufferedImage modelTexture = new ImageConverter(texture.getSource()).convert(new ResourcePackTextureFile("entity/" + name));
+            texture.setResolution(modelTexture.getWidth());
             if(withHurtColor)
             {
                 String hurtName = name.split(".png")[0] + "_hurt.png";

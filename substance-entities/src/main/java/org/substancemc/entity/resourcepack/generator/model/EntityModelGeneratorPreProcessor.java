@@ -27,12 +27,12 @@ public class EntityModelGeneratorPreProcessor implements GeneratorPreProcessor<B
                 if(bone.getCubeChildren().isEmpty()) continue;
                 List<BlockBenchModelCube> cubesForEachModel = Arrays.stream(model.getCubes()).filter(cube -> bone.getCubeChildren().contains(new JsonPrimitive(cube.getUUID()))).toList();
                 ResourcePackModel resourcePackModel = new BlockBenchResourcePackModel(model, cubesForEachModel);
-                ResourcePackModelFile standard = new ResourcePackModelFile("entity/" + model.getModelIdentifier() + "_" + bone.getUUID().replace("-", "_") + ".json");
+                ResourcePackModelFile standard = new ResourcePackModelFile("entity/" + model.getModelIdentifier() + "/" + bone.getName().toLowerCase().replace(" ", "_").replace("-", "_") + ".json");
                 processed.put(standard, resourcePackModel);
                 if(SubstancePlugin.get().getConfig().getBoolean("misc.hurtColor"))
                 {
                     ResourcePackModel hurtModel = new BlockBenchResourcePackModel(model, cubesForEachModel, true);
-                    ResourcePackModelFile hurt = new ResourcePackModelFile(standard.getTopLevelRelativePath().substring(0, standard.getTopLevelRelativePath().length() - 5) + "_hurt.json");
+                    ResourcePackModelFile hurt = new ResourcePackModelFile( standard.getTopLevelRelativePath().substring(0, standard.getTopLevelRelativePath().length() - 5) + "_hurt.json");
                     processed.put(hurt, hurtModel);
                 }
                 SubstancePlugin.get().getLogger().warning("Generated sub-model of model " + model.getName()  + " with id " + model.getModelIdentifier() + " for bone " + bone.getName() + " with " + resourcePackModel.getElements().length + " cubes");
