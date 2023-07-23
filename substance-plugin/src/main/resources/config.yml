@@ -1,5 +1,4 @@
 resourcePack:
   modelMaterial: LEATHER_HORSE_ARMOR # Any material not used by other plugins
-misc:
+entity:
   hurtColor: true
-  spawnEggs: true

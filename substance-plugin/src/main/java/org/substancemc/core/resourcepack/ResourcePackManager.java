@@ -1,17 +1,16 @@
 package org.substancemc.core.resourcepack;
 
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.resourcepack.generator.atlas.ResourcePackAtlasGenerator;
 import org.substancemc.core.resourcepack.listener.ResourcePackListener;
-import org.substancemc.core.resourcepack.server.local.LocalPackProvider;
 import org.substancemc.core.resourcepack.server.ResourcePackProvider;
 import org.substancemc.core.resourcepack.structure.minecraft.atlas.ResourcePackAtlasEntry;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
-import org.apache.commons.io.FileUtils;
-import org.bukkit.Material;
 import org.substancemc.core.util.zip.ZipUtils;
 
 import java.io.File;
@@ -29,7 +28,7 @@ public class ResourcePackManager implements SubstanceManager {
     private final List<ResourcePackOperation> operations = new ArrayList<>();
     private final ResourcePackAtlasGenerator atlasGenerator = new ResourcePackAtlasGenerator();
 
-    private final ResourcePackProvider packProvider = new LocalPackProvider(8888);
+    private ResourcePackProvider packProvider;
 
     @Override
     public void load() {
@@ -72,9 +71,14 @@ public class ResourcePackManager implements SubstanceManager {
         }
     }
 
+    public void setPackProvider(ResourcePackProvider provider)
+    {
+        this.packProvider = provider;
+    }
+
     private void upload()
     {
-        packProvider.upload(new DataFolderFile("resourcePack.zip"));
+        if(packProvider != null) packProvider.upload(new DataFolderFile("resourcePack.zip"));
     }
 
     @Override

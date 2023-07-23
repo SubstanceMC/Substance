@@ -33,12 +33,7 @@ public class BlockBenchModelCube extends ModelCube {
 
     public double[] getFrom()
     {
-        double[] withInflate = new double[from.length];
-        for(int i = 0; i < withInflate.length; i++)
-        {
-            withInflate[i] = Math.round(from[i] - inflate);
-        }
-        return withInflate;
+        return from;
     }
 
     public void setFrom(double[] from) {
@@ -51,24 +46,7 @@ public class BlockBenchModelCube extends ModelCube {
 
     public double[] getTo()
     {
-        double[] withInflate = new double[from.length];
-        for(int i = 0; i < withInflate.length; i++)
-        {
-            withInflate[i] = Math.round(to[i] + inflate);
-        }
-        return withInflate;
-    }
-
-    public boolean isMinecraftIllegal()
-    {
-        for(int i = 0; i < from.length; i++)
-        {
-            double fromDef = from[i];
-            if(-16 > fromDef || fromDef > 32) return true;
-            double toDef = to[i];
-            if(-16 > toDef || toDef > 32) return true;
-        }
-        return false;
+        return to;
     }
 
     public void setTo(double[] to) {

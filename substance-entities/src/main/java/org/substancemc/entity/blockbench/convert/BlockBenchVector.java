@@ -43,4 +43,12 @@ public class BlockBenchVector extends Vector3d {
         return this;
     }
 
+    public BlockBenchVector sub(double d)
+    {
+        this.x = x - d;
+        this.y = y - d;
+        this.z = z - d;
+        return this;
+    }
+
 }

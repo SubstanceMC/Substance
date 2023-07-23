@@ -1,4 +1,4 @@
-package org.substancemc.core.resourcepack.server.local;
+package org.substancemc.localprovider;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

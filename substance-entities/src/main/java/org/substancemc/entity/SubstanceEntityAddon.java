@@ -2,6 +2,7 @@ package org.substancemc.entity;
 
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.addon.AddonManager;
+import org.substancemc.core.addon.AddonPriority;
 import org.substancemc.core.addon.SubstanceAddon;
 import org.substancemc.entity.blockbench.BlockBenchManager;
 import org.substancemc.entity.resourcepack.operations.EntityAddonResourcePackOperation;
@@ -23,6 +24,11 @@ public class SubstanceEntityAddon implements SubstanceAddon {
         return new String[]{"SubstanceMC"};
     }
 
+    @Override
+    public int getPriority() {
+        return AddonPriority.HIGHEST;
+    }
+
     private BlockBenchManager blockBenchManager;
 
     @Override
@@ -30,7 +36,6 @@ public class SubstanceEntityAddon implements SubstanceAddon {
         blockBenchManager = new BlockBenchManager();
         blockBenchManager.load();
         SubstancePlugin.get().getResourcePackManager().addOperation(new EntityAddonResourcePackOperation());
-        SubstancePlugin.get().getLogger().info(getId() + " v" + getVersion() + " loaded. (Addon by " + String.join(", ", getAuthors()) + ")");
     }
 
     @Override

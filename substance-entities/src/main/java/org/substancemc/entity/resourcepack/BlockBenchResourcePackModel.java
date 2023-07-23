@@ -1,42 +1,47 @@
 package org.substancemc.entity.resourcepack;
 
-import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.resourcepack.structure.minecraft.model.ModelElementFacingInformation;
 import org.substancemc.core.resourcepack.structure.substance.ResourcePackModel;
-import org.substancemc.core.resourcepack.structure.substance.ResourcePackModelCube;
+import org.substancemc.core.resourcepack.structure.substance.ResourcePackModelCubeDisplay;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
-import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelTexture;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlockBenchResourcePackModel extends ResourcePackModel {
-    public BlockBenchResourcePackModel(BlockBenchModel parentModel, List<BlockBenchModelCube> cubes)
+    public BlockBenchResourcePackModel(List<BlockBenchModelCube> cubes, String subParent, BlockBenchModel parent, boolean hurt)
     {
-        create(parentModel, cubes, false);
+        setTextures(extractTextures(cubes, parent, hurt));
+        setParent(subParent);
+        ResourcePackModelCubeDisplay head = new ResourcePackModelCubeDisplay();
+        getDisplay().put("head", head);
+        head.setScale(3.7333333, 3.7333333, 3.7333333);
     }
 
-    public BlockBenchResourcePackModel(BlockBenchModel parentModel, List<BlockBenchModelCube> cubes, boolean hurt)
+    public BlockBenchResourcePackModel()
     {
-        create(parentModel, cubes, hurt);
+        ResourcePackModelCubeDisplay head = new ResourcePackModelCubeDisplay();
+        getDisplay().put("head", head);
+        head.setScale(3.7333333, 3.7333333, 3.7333333);
     }
 
-    private void create(BlockBenchModel parentModel, List<BlockBenchModelCube> cubes, boolean hurt)
+    private Map<String, String> extractTextures(List<BlockBenchModelCube> childGroup, BlockBenchModel parent, boolean hurt)
     {
         Map<String, String> textures = new HashMap<>();
-        for(BlockBenchModelTexture texture : parentModel.getTextures())
-        {
-            textures.put(texture.getId(),"substance:entity/" + texture.getName().substring(0, texture.getName().length() - 4) + (hurt ? "_hurt" : ""));
-        }
-        setTextures(textures);
-        ResourcePackModelCube[] elements = new ResourcePackModelCube[cubes.size()];
-        for(int i = 0; i < elements.length; i++)
-        {
-            elements[i] = new ResourcePackModelCube(cubes.get(i));
-        }
-        setElements(elements);
+        childGroup.forEach(child -> {
+            for(ModelElementFacingInformation information : child.getFaces().getAllFacings())
+            {
+                if(!textures.containsKey(information.getTextureId()))
+                {
+                    String textureName = Objects.requireNonNull(Arrays.stream(parent.getTextures()).filter(texture -> texture.getId().equals(information.getTextureId())).findAny().orElse(null)).getName();
+                    textureName = textureName.substring(0, textureName.length() - 4);
+                    if(hurt) textureName += "_hurt";
+                    textures.put(information.getTextureId(), String.format("substance:entity/%s", textureName));
+                }
+            }
+        });
+        return textures;
     }
+
 
 }

@@ -31,6 +31,7 @@
     <modules>
         <module>substance-entities</module>
         <module>substance-plugin</module>
+        <module>substance-localprovider</module>
     </modules>
 
     <repositories>

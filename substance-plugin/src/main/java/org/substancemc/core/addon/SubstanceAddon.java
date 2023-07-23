@@ -11,5 +11,8 @@ public interface SubstanceAddon extends SubstanceManager {
         return new String[]{};
     }
 
-
+    default int getPriority()
+    {
+        return -1;
+    }
 }

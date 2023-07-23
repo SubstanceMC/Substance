@@ -1,11 +1,36 @@
 package org.substancemc.core.resourcepack.structure.substance;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ResourcePackModel {
     private int[] texture_size;
     private Map<String, String> textures;
     private ResourcePackModelCube[] elements;
+
+    private String parent;
+
+    private Map<String, ResourcePackModelCubeDisplay> display = new HashMap<>();
+
+    public Map<String, ResourcePackModelCubeDisplay> getDisplay()
+    {
+        return display;
+    }
+
+    public String getParent()
+    {
+        return parent;
+    }
+
+    public void setParent(String parent)
+    {
+        this.parent = parent;
+    }
+
+    public void setDisplay(Map<String, ResourcePackModelCubeDisplay> display)
+    {
+        this.display = display;
+    }
 
     public int[] getTextureSize() {
         return texture_size;
@@ -29,6 +54,11 @@ public class ResourcePackModel {
 
     public void setElements(ResourcePackModelCube[] elements) {
         this.elements = elements;
+    }
+
+    public ResourcePackModelCube getElement(int index)
+    {
+        return getElements()[index];
     }
 
 

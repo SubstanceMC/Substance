@@ -30,7 +30,7 @@ public class ResourcePackEntityTextureGenerator implements GeneratorPreProcessor
 
     @Override
     public void generate(BlockBenchModel model) {
-        boolean withHurtColor = SubstancePlugin.get().getConfig().getBoolean("misc.hurtColor");
+        boolean withHurtColor = !SubstancePlugin.get().getConfig().contains("entity.hurtColor") || SubstancePlugin.get().getConfig().getBoolean("entity.hurtColor");
         List<BlockBenchModelTexture> processed = getProcessor().process(model);
         processed.forEach(texture -> {
             String name = texture.getName();

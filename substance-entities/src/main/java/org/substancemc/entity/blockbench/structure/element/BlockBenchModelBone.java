@@ -2,6 +2,7 @@ package org.substancemc.entity.blockbench.structure.element;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,8 @@ public class BlockBenchModelBone {
     private int color;
     private String uuid;
 
-    //The needed zoom to still render this cube (e.g. Bone holding the body of a mob that is bigger than 2 blocks)
-    private transient double zoom;
+    //Shows if the bone got shrunk during generation period
+    private transient boolean small;
     private boolean visibility;
     private int autouv;
     private JsonElement[] children;
@@ -68,14 +69,14 @@ public class BlockBenchModelBone {
         this.autouv = autoUV;
     }
 
-    public double getZoom()
+    @ApiStatus.Experimental
+    public boolean isSmall()
     {
-        return zoom;
+        return small;
     }
-
-    public void setZoom(double zoom)
+    public void setSmall(boolean small)
     {
-        this.zoom = zoom;
+        this.small = small;
     }
 
     public List<JsonElement> getCubeChildren() {
