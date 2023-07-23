@@ -1,5 +1,6 @@
 
-<p align="center">
+# Substance
+<p align="left">
 <a href="https://www.codefactor.io/repository/github/substancemc/substance/stats">
 <img src="https://www.codefactor.io/repository/github/substancemc/substance/badge">
 </a>
@@ -11,5 +12,4 @@
 </a>
 </p>
 
-# Substance
 Minecraft Java Plugin to create performant custom entities with custom models and textures
