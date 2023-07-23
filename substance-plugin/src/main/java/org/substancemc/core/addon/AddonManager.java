@@ -44,6 +44,11 @@ public class AddonManager implements SubstanceManager {
         return (T) addonList.stream().filter(addon -> addon.getId().equals(addonId)).findFirst().orElse(null);
     }
 
+    public List<SubstanceAddon> getAddons()
+    {
+        return addonList;
+    }
+
     @Override
     public void unload() {
         addonList.forEach(SubstanceManager::unload);

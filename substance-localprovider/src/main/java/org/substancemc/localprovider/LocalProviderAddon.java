@@ -27,7 +27,7 @@ public class LocalProviderAddon implements SubstanceAddon {
 
     @Override
     public void load() {
-        SubstancePlugin.get().getResourcePackManager().setPackProvider(new LocalPackProvider(8888));
+        SubstancePlugin.get().getResourcePackManager().setPackProvider(new LocalPackProvider(1234));
     }
 
     @Override

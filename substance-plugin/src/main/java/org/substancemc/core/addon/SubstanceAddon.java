@@ -6,6 +6,11 @@ public interface SubstanceAddon extends SubstanceManager {
 
     String getVersion();
     String getId();
+
+    default boolean showsInMetrics()
+    {
+        return true;
+    }
     default String[] getAuthors()
     {
         return new String[]{};
