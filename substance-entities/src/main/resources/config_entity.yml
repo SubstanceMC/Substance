@@ -1,0 +1,4 @@
+settings:
+  hurtColor: true
+  spawnEgg: true
+  modelMaterial: LEATHER_HORSE_ARMOR

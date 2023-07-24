@@ -1,9 +1,11 @@
 package org.substancemc.core.util.resource;
 
+import org.substancemc.core.util.file.DataFolderFile;
+
 public class SubstanceResourceConstants {
-    public static String[] RESOURCE_LOCATIONS = new String[]
+    public static DataFolderFile[] RESOURCE_LOCATIONS = new DataFolderFile[]
             {
-                    "pack/pack.mcmeta",
-                    "pack/pack.png",
+                    new DataFolderFile("pack/pack.mcmeta"),
+                    new DataFolderFile("pack/pack.png"),
             };
 }

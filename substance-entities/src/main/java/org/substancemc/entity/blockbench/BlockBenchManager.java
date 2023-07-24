@@ -1,6 +1,5 @@
 package org.substancemc.entity.blockbench;
 
-import org.checkerframework.checker.units.qual.A;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
 import org.substancemc.entity.blockbench.convert.BlockBenchConvertManager;
@@ -41,6 +40,11 @@ public class BlockBenchManager implements SubstanceManager {
     public List<BlockBenchModel> getModels()
     {
         return modelList;
+    }
+
+    public BlockBenchModel getModel(String id)
+    {
+        return modelList.stream().filter(model -> model.getModelIdentifier().equals(id)).findAny().orElse(null);
     }
 
     public BlockBenchConvertManager getConverter()

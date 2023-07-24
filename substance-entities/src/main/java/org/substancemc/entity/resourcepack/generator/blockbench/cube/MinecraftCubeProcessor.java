@@ -1,4 +1,4 @@
-package org.substancemc.entity.resourcepack.generator.cube;
+package org.substancemc.entity.resourcepack.generator.blockbench.cube;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.substancemc.core.resourcepack.generator.GeneratorPreProcessor;
@@ -9,7 +9,7 @@ import org.substancemc.entity.blockbench.convert.BlockBenchVector;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelBone;
 import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
-import org.substancemc.entity.resourcepack.BlockBenchResourcePackModel;
+import org.substancemc.entity.resourcepack.generator.blockbench.model.BlockBenchResourcePackModel;
 
 import java.util.*;
 

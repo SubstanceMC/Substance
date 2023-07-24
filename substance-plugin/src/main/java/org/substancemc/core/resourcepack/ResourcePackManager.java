@@ -112,11 +112,6 @@ public class ResourcePackManager implements SubstanceManager {
         operations.add(operation);
     }
 
-    public Material getModelMaterial()
-    {
-        return Material.getMaterial(Objects.requireNonNull(SubstancePlugin.get().getConfig().getString("resourcePack.modelMaterial")));
-    }
-
     public ResourcePackProvider getPackProvider()
     {
         return packProvider;

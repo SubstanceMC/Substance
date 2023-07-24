@@ -12,6 +12,8 @@ public class ResourcePackModelLink {
     private Map<String, String> textures;
     private Override[] overrides;
 
+    private transient Material material;
+
     public String getParent() {
         return parent;
     }
@@ -38,7 +40,22 @@ public class ResourcePackModelLink {
 
     public ResourcePackModelLink(Material material, List<String> totalModelList)
     {
+        create(material, totalModelList);
+    }
+
+    public ResourcePackModelLink(Material material, Override[] overrides, List<String> totalModelList)
+    {
+        for(Override override : overrides)
+        {
+            totalModelList.add(override.getModel());
+        }
+        create(material, totalModelList);
+    }
+
+    private void create(Material material, List<String> totalModelList)
+    {
         if(!material.isItem()) throw new RuntimeException("Material has to be an item material");
+        this.material = material;
         this.parent = "minecraft:item/generated";
         Map<String, String> textureMap = new HashMap<>();
         textureMap.put("layer0", "minecraft:item/" + material.toString().toLowerCase());
@@ -50,5 +67,11 @@ public class ResourcePackModelLink {
             overrides[i] = new Override(totalModelList.get(i), currentModelData);
         }
     }
+
+    public Material getMaterial()
+    {
+        return material;
+    }
+
 
 }

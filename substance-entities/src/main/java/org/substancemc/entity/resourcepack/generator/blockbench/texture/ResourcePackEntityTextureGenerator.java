@@ -1,6 +1,7 @@
-package org.substancemc.entity.resourcepack.generator.texture;
+package org.substancemc.entity.resourcepack.generator.blockbench.texture;
 
 import org.checkerframework.checker.units.qual.A;
+import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import org.substancemc.entity.blockbench.structure.texture.BlockBenchModelTexture;
 import org.substancemc.core.SubstancePlugin;
@@ -30,7 +31,7 @@ public class ResourcePackEntityTextureGenerator implements GeneratorPreProcessor
 
     @Override
     public void generate(BlockBenchModel model) {
-        boolean withHurtColor = !SubstancePlugin.get().getConfig().contains("entity.hurtColor") || SubstancePlugin.get().getConfig().getBoolean("entity.hurtColor");
+        boolean withHurtColor = SubstanceEntityAddon.get().isHurtColorEnabled();
         List<BlockBenchModelTexture> processed = getProcessor().process(model);
         processed.forEach(texture -> {
             String name = texture.getName();

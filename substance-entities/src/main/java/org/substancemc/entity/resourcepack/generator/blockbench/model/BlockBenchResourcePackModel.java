@@ -1,4 +1,4 @@
-package org.substancemc.entity.resourcepack;
+package org.substancemc.entity.resourcepack.generator.blockbench.model;
 
 import org.substancemc.core.resourcepack.structure.minecraft.model.ModelElementFacingInformation;
 import org.substancemc.core.resourcepack.structure.substance.ResourcePackModel;

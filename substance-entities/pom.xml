@@ -10,12 +10,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>substance-entities</artifactId>
+    <version>0.1.1-UNUSABLE</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.substancemc</groupId>
             <artifactId>substance-plugin</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 
