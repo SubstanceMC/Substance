@@ -24,7 +24,7 @@ public class SubstanceConfiguration extends YamlConfiguration {
         Map<String, Object> map = new HashMap<>();
         transformToMap("", path, map);
         try {
-            return (T) instance.deserialize(path, map);
+            return (T) instance.deserialize(map);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
