@@ -32,14 +32,11 @@ public class SubstanceConfiguration extends YamlConfiguration {
 
     @NotNull
     public static SubstanceConfiguration loadConfiguration(@NotNull File file) {
-        Preconditions.checkArgument(true, "File cannot be null");
         SubstanceConfiguration config = new SubstanceConfiguration();
-
         try {
             config.load(file);
-        } catch (FileNotFoundException var3) {
-        } catch (IOException | InvalidConfigurationException var4) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, var4);
+        } catch (IOException | InvalidConfigurationException e) {
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, e);
         }
 
         return config;

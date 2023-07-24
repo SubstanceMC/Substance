@@ -73,49 +73,71 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
     }
 
 
+    private void fixOffset(double[] offset, double[] from, double[] to)
+    {
+        for (int i = 0; i < 3; i++) {
+            if (from[i] + offset[i] > 32.0) {
+                offset[i] -= from[i] + offset[i] - 32.0;
+            }
+
+            if (from[i] + offset[i] < -16.0) {
+                offset[i] -= from[i] + offset[i] + 16;
+            }
+
+            if (to[i] + offset[i] > 32.0) {
+                offset[i] -= to[i] + offset[i] - 32.0;
+            }
+
+            if (to[i] + offset[i] < -16.0) {
+                offset[i] -= to[i] + offset[i] + 16;
+            }
+        }
+    }
+
+    private void preFixCubes(ResourcePackModelCube[] cubes, double[] offset)
+    {
+        for(ResourcePackModelCube normalized : cubes) {
+            normalized.shrinkCube(0.6);
+            fixOffset(offset, normalized.getFrom().get(), normalized.getTo().get());
+        }
+    }
+
+    private void shrinkOrigin(ResourcePackModelCube[] cubes, double[] offset)
+    {
+        Arrays.stream(cubes).toList().forEach(normalized -> {
+            normalized.getRotation().getOrigin().shrink(0.42857143);
+            normalized.getRotation().getOrigin().addOffset(offset);
+        });
+    }
+
+    private void shrinkRotation(ResourcePackModelCube[] cubes, double[] offset)
+    {
+        Arrays.stream(cubes).toList().forEach(normalized -> {
+            if(normalized.getRotation() == null || normalized.getRotation().getOrigin() == null) return;
+            normalized.getRotation().getOrigin().shrink(0.6);
+            normalized.getRotation().getOrigin().addOffset(offset);
+        });
+    }
+
+    private void resetScaleForDisplay(ResourcePackModel model, double[] offset, double scale)
+    {
+        if (offset[0] != 0 || offset[1] != 0 || offset[2] != 0) {
+            model.getDisplay().get("head").moveTranslation(offset);
+        }
+        model.getDisplay().get("head").setScale(scale, scale, scale);
+    }
 
     @ApiStatus.Experimental
     private boolean normalize(ResourcePackModelCube[] cubes, ResourcePackModel model)
     {
         double[] offset = new double[]{0, 0, 0};
-        for(ResourcePackModelCube normalized : cubes) {
-            normalized.shrinkCube(0.6);
-            for (int i = 0; i < 3; i++) {
-                if (normalized.getFrom().get()[i] + offset[i] > 32.0) {
-                    offset[i] -= normalized.getFrom().get()[i] + offset[i] - 32.0;
-                }
-
-                if (normalized.getFrom().get()[i] + offset[i] < -16.0) {
-                    offset[i] -= normalized.getFrom().get()[i] + offset[i] + 16;
-                }
-
-                if (normalized.getTo().get()[i] + offset[i] > 32.0) {
-                    offset[i] -= normalized.getTo().get()[i] + offset[i] - 32.0;
-                }
-
-                if (normalized.getTo().get()[i] + offset[i] < -16.0) {
-                    offset[i] -= normalized.getTo().get()[i] + offset[i] + 16;
-                }
-            }
-        }
-
+        preFixCubes(cubes, offset);
         boolean from, to;
-
         Iterator<ResourcePackModelCube> normalizeIterator = Arrays.stream(cubes).iterator();
-
         do {
             if(!normalizeIterator.hasNext()) {
-                normalizeIterator = Arrays.stream(cubes).iterator();
-                while (normalizeIterator.hasNext()) {
-                    ResourcePackModelCube normalized = normalizeIterator.next();
-                    if(normalized.getRotation() == null || normalized.getRotation().getOrigin() == null) continue;
-                    normalized.getRotation().getOrigin().shrink(0.6);
-                    normalized.getRotation().getOrigin().addOffset(offset);
-                }
-                if (offset[0] != 0 || offset[1] != 0 || offset[2] != 0) {
-                    model.getDisplay().get("head").moveTranslation(offset);
-                }
-                model.getDisplay().get("head").setScale(3.8095, 3.8095, 3.8095);
+                shrinkRotation(cubes, offset);
+                resetScaleForDisplay(model, offset, 3.8095);
                 return true;
             }
             ResourcePackModelCube normalized = normalizeIterator.next();
@@ -128,43 +150,19 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
         return shrinkLarge(cubes, model);
     }
 
+
     private boolean shrinkLarge(ResourcePackModelCube[] cubes, ResourcePackModel model)
     {
         double[] offset = new double[]{0, 0, 0};
-        for(ResourcePackModelCube normalized : cubes) {
-            normalized.shrinkCube(0.6);
-            for (int i = 0; i < 3; i++) {
-                if (normalized.getFrom().get()[i] + offset[i] > 32.0) {
-                    offset[i] -= normalized.getFrom().get()[i] + offset[i] - 32.0;
-                }
-
-                if (normalized.getFrom().get()[i] + offset[i] < -16.0) {
-                    offset[i] -= normalized.getFrom().get()[i] + offset[i] + 16;
-                }
-
-                if (normalized.getTo().get()[i] + offset[i] > 32.0) {
-                    offset[i] -= normalized.getTo().get()[i] + offset[i] - 32.0;
-                }
-
-                if (normalized.getTo().get()[i] + offset[i] < -16.0) {
-                    offset[i] -= normalized.getTo().get()[i] + offset[i] + 16;
-                }
-            }
-        }
-
-
-        Iterator<ResourcePackModelCube> normalizeIterator = Arrays.stream(cubes).iterator();
-        while (normalizeIterator.hasNext()) {
-            ResourcePackModelCube normalized = normalizeIterator.next();
-            normalized.getRotation().getOrigin().shrink(0.42857143);
-            normalized.getRotation().getOrigin().addOffset(offset);
-        }
-        if (offset[0] != 0 || offset[1] != 0 || offset[2] != 0) {
-            model.getDisplay().get("head").moveTranslation(offset);
-        }
-        model.getDisplay().get("head").setScale(3.7333333, 3.7333333, 3.7333333);
+        preFixCubes(cubes, offset);
+        shrinkOrigin(cubes, offset);
+        resetScaleForDisplay(model, offset, 3.7333333);
         return false;
     }
+
+
+
+
 
     private void updateUV(BlockBenchModel parent, ResourcePackModelCube cube)
     {
