@@ -7,3 +7,8 @@ description: Plugin to add lagfree custom entities to java vanilla minecraft
 website: https://github.com/SubstanceMC
 softdepend:
   - ProtocolLib
+commands:
+  spawneggs:
+    description: List all spawn eggs for entities
+    permission: substance.entities
+    aliases: [spe]

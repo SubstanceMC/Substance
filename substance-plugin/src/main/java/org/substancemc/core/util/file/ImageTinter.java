@@ -1,5 +1,8 @@
 package org.substancemc.core.util.file;
 
+import org.jetbrains.annotations.Nullable;
+import org.substancemc.core.SubstancePlugin;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,17 +13,29 @@ public class ImageTinter {
     private final DataFolderFile resultFile;
     private final Color tint;
 
-    public ImageTinter(DataFolderFile resultFile, Color tint)
+    public ImageTinter(@Nullable DataFolderFile resultFile, Color tint)
     {
         this.resultFile = resultFile;
         this.tint = tint;
     }
 
-    public void tint(BufferedImage image)
+
+    public BufferedImage tint(DataFolderFile imageFile)
     {
         try {
-            if(!resultFile.getFile().getParentFile().exists()) resultFile.getFile().getParentFile().mkdirs();
-            if(!resultFile.getFile().exists()) resultFile.getFile().createNewFile();
+            BufferedImage image = ImageIO.read(imageFile.getFile());
+            return tint(image);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public BufferedImage tint(BufferedImage image)
+    {
+        try {
+
             BufferedImage tinted = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = tinted.createGraphics();
             graphics.drawImage(image, 0, 0, null);
@@ -47,7 +62,13 @@ public class ImageTinter {
                     }
                 }
             }
-            ImageIO.write(tinted, "png", resultFile.getFile());
+            if(resultFile != null)
+            {
+                if(!resultFile.getFile().getParentFile().exists()) resultFile.getFile().getParentFile().mkdirs();
+                if(!resultFile.getFile().exists()) resultFile.getFile().createNewFile();
+                ImageIO.write(tinted, "png", resultFile.getFile());
+            }
+            return tinted;
         }catch (IOException e)
         {
             throw new RuntimeException(e);

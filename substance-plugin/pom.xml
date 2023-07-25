@@ -30,13 +30,17 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <!-- Replace this with your package! -->
                             <shadedPattern>org.substancemc.core.util.bStats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>org.substancemc.core.util.text</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>
                         <includes>
                             <include>org.bstats</include>
+                            <include>net.kyori</include>
                         </includes>
                     </artifactSet>
                     <filters>

@@ -3,11 +3,14 @@ package org.substancemc.entity.entity;
 import org.bukkit.inventory.ItemStack;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.config.SubstanceSerializable;
+import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SubstanceEntityType implements ISubstanceEntityType, SubstanceSerializable {
 
@@ -16,12 +19,13 @@ public class SubstanceEntityType implements ISubstanceEntityType, SubstanceSeria
 
     private transient ItemStack spawnEgg;
     private transient Color spawnEggBase, spawnEggOverlay;
-    private List<Integer> spawnEggBaseColor, spawnEggOverlayColor;
-
+    private transient DataFolderFile spawnEggBaseFile, spawnEggOverlayFile;
+    private List<Integer> spawnEggBaseColor, spawnEggOverlayColor = new ArrayList<>();
+    private String spawnEggBaseTexture, spawnEggOverlayTexture;
     private double maxHealth;
     private transient double[] hitBox = new double[2];
 
-    private List<Double> hitBoxSize;
+    private List<Double> hitBoxSize = new ArrayList<>();
     private String name, id;
 
     @Override
@@ -40,7 +44,9 @@ public class SubstanceEntityType implements ISubstanceEntityType, SubstanceSeria
             hitBox[0] = hitBoxSize.get(0);
             hitBox[1] = hitBoxSize.get(1);
         }
-        SubstancePlugin.get().getLogger().warning(modelId);
+        if(spawnEggBaseTexture != null) this.spawnEggBaseFile = new DataFolderFile(spawnEggBaseTexture);
+        if(spawnEggOverlayTexture != null) this.spawnEggOverlayFile = new DataFolderFile(spawnEggOverlayTexture);
+
     }
 
     public Color getSpawnEggBase()
@@ -111,7 +117,17 @@ public class SubstanceEntityType implements ISubstanceEntityType, SubstanceSeria
 
     @Override
     public ItemStack getSpawnEgg() {
-        return spawnEgg;
+        return spawnEgg != null ? spawnEgg.clone() : null;
+    }
+
+    @Override
+    public DataFolderFile getSpawnEggBaseFile() {
+        return spawnEggBaseFile;
+    }
+
+    @Override
+    public DataFolderFile getSpawnEggOverlayFile() {
+        return spawnEggOverlayFile;
     }
 
     public void setSpawnEgg(ItemStack spawnEgg)

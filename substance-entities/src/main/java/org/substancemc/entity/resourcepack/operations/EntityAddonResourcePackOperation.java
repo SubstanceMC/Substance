@@ -6,6 +6,7 @@ import org.substancemc.core.resourcepack.generator.model.ResourcePackModelLinkGe
 import org.substancemc.core.resourcepack.structure.minecraft.atlas.ResourcePackAtlasEntry;
 import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.resourcepack.operations.blockbench.BlockBenchToMinecraftResourcePackOperation;
+import org.substancemc.entity.resourcepack.operations.spawnegg.SpawnEggItemResourcePackOperation;
 
 public class EntityAddonResourcePackOperation implements ResourcePackOperation {
 
@@ -14,6 +15,7 @@ public class EntityAddonResourcePackOperation implements ResourcePackOperation {
     public void operate() {
         new BlockBenchToMinecraftResourcePackOperation(SubstanceEntityAddon.get().getBlockBenchManager().getModels()).operate();
         new ResourcePackModelLinkGenerator(SubstanceEntityAddon.get().getModelMaterial()).generate(SubstanceEntityAddon.get().getBlockBenchManager().getModelLocators());
+        if(SubstanceEntityAddon.get().isSpawnEggEnabled()) new SpawnEggItemResourcePackOperation().operate();
         SubstancePlugin.get().getResourcePackManager().addAtlasEntry("blocks", new ResourcePackAtlasEntry("entity", "directory"));
     }
 }

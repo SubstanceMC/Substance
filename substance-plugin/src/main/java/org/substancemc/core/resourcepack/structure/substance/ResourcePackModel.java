@@ -10,10 +10,12 @@ public class ResourcePackModel {
 
     private String parent;
 
-    private Map<String, ResourcePackModelCubeDisplay> display = new HashMap<>();
+    private Map<String, ResourcePackModelCubeDisplay> display;
+
 
     public Map<String, ResourcePackModelCubeDisplay> getDisplay()
     {
+        if(display == null) display = new HashMap<>();
         return display;
     }
 
