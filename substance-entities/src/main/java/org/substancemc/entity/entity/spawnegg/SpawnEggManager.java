@@ -1,18 +1,14 @@
 package org.substancemc.entity.entity.spawnegg;
 
-import org.checkerframework.checker.units.qual.A;
-import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
 import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.entity.SubstanceEntityType;
-import org.substancemc.entity.entity.spawnegg.command.SpawnEggCommand;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class SpawnEggManager implements SubstanceManager {
 
@@ -29,7 +25,6 @@ public class SpawnEggManager implements SubstanceManager {
             spawnEggMap.put(entityType.getSpawnEggOverlayFile(), entityType.getSpawnEggOverlay());
             spawnEggEntityMap.put(entityType, spawnEggMap);
         });
-        Objects.requireNonNull(SubstancePlugin.get().getCommand("spawneggs")).setExecutor(new SpawnEggCommand());
     }
 
     public HashMap<SubstanceEntityType, HashMap<DataFolderFile, Color>> getSpawnEggEntityMap()

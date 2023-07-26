@@ -3,13 +3,15 @@ package org.substancemc.entity;
 import org.bukkit.Material;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.addon.AddonManager;
-import org.substancemc.core.addon.AddonPriority;
 import org.substancemc.core.addon.SubstanceAddon;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.entity.blockbench.BlockBenchManager;
 import org.substancemc.entity.entity.SubstanceEntityManager;
+import org.substancemc.entity.entity.spawnegg.command.SpawnEggCommand;
 import org.substancemc.entity.resourcepack.operations.EntityAddonResourcePackOperation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SubstanceEntityAddon implements SubstanceAddon {
@@ -30,8 +32,9 @@ public class SubstanceEntityAddon implements SubstanceAddon {
     }
 
     @Override
-    public int getPriority() {
-        return AddonPriority.HIGHEST;
+    public String[] getDependencyAddons() {
+
+        return new String[]{"substance-item"};
     }
 
     private BlockBenchManager blockBenchManager;
@@ -45,6 +48,7 @@ public class SubstanceEntityAddon implements SubstanceAddon {
         blockBenchManager.load();
         entityManager.load();
         SubstancePlugin.get().getResourcePackManager().addOperation(new EntityAddonResourcePackOperation());
+        SubstancePlugin.get().getCommandManager().addSubCommand(new SpawnEggCommand());
 
     }
 

@@ -7,11 +7,10 @@
         <groupId>org.substancemc</groupId>
         <version>latest</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>substance-entities</artifactId>
-    <version>0.1.1-UNUSABLE</version>
-    <packaging>jar</packaging>
+
+    <artifactId>substance-items</artifactId>
+    <version>0.1.0-UNUSABLE</version>
     <dependencies>
         <dependency>
             <groupId>org.substancemc</groupId>

@@ -34,7 +34,7 @@ public interface SubstanceSerializable extends ConfigurationSerializable {
         }
         return serialized;
     }
-    default SubstanceSerializable deserialize(Map<String, Object> values) throws IllegalAccessException {
+    default SubstanceSerializable deserialize(String path, Map<String, Object> values) throws IllegalAccessException {
         Field[] fields = getInstance().getClass().getDeclaredFields();
         for(Field field : fields)
         {

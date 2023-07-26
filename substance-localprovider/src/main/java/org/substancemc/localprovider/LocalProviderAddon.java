@@ -1,7 +1,6 @@
 package org.substancemc.localprovider;
 
 import org.substancemc.core.SubstancePlugin;
-import org.substancemc.core.addon.AddonPriority;
 import org.substancemc.core.addon.SubstanceAddon;
 
 public class LocalProviderAddon implements SubstanceAddon {
@@ -18,11 +17,6 @@ public class LocalProviderAddon implements SubstanceAddon {
     @Override
     public String[] getAuthors() {
         return new String[] {"SubstanceMC"};
-    }
-
-    @Override
-    public int getPriority() {
-        return AddonPriority.HIGHEST;
     }
 
     @Override

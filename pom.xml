@@ -7,7 +7,7 @@
     <groupId>org.substancemc</groupId>
     <artifactId>Substance</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0-UNUSABLE</version>
+    <version>latest</version>
     <distributionManagement>
         <repository>
             <id>dev</id>
@@ -32,6 +32,7 @@
         <module>substance-entities</module>
         <module>substance-plugin</module>
         <module>substance-localprovider</module>
+        <module>substance-items</module>
     </modules>
 
     <repositories>
@@ -118,6 +119,12 @@
             <artifactId>ProtocolLib</artifactId>
             <version>5.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
+            <version>9.0.3</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

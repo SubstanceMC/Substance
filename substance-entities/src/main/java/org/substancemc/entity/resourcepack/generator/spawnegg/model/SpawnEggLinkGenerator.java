@@ -18,7 +18,7 @@ import java.util.List;
 
 public class SpawnEggLinkGenerator extends ResourcePackModelLinkGenerator {
     public SpawnEggLinkGenerator() {
-        super(Material.PAPER);
+        super(Material.CARROT_ON_A_STICK);
     }
 
     @Override

@@ -6,6 +6,9 @@ import org.substancemc.core.util.config.SubstanceConfiguration;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface SubstanceAddon extends SubstanceManager {
 
     String getVersion();
@@ -30,9 +33,8 @@ public interface SubstanceAddon extends SubstanceManager {
     {
         return new String[]{};
     }
-
-    default int getPriority()
+    default String[] getDependencyAddons()
     {
-        return -1;
+        return new String[]{};
     }
 }

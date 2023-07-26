@@ -1,11 +1,13 @@
 package org.substancemc.core;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.AdvancedBarChart;
 import org.bstats.charts.DrilldownPie;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.units.qual.C;
 import org.substancemc.core.addon.AddonManager;
+import org.substancemc.core.command.SubstanceCommandManager;
 import org.substancemc.core.compatibility.CompatibilityManager;
 import org.substancemc.core.resourcepack.ResourcePackManager;
 import org.substancemc.core.util.resource.ResourceExtractor;
@@ -23,11 +25,18 @@ public class SubstancePlugin extends JavaPlugin {
     private CompatibilityManager compatibilityManager;
     private ResourceExtractor resourceExtractor;
 
+    private SubstanceCommandManager commandManager;
+
     private Metrics metrics;
 
+    public void onLoad()
+    {
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+    }
     public void onEnable()
     {
         instance = this;
+        commandManager = new SubstanceCommandManager();
         addonManager = new AddonManager();
         resourcePackManager = new ResourcePackManager();
         compatibilityManager = new CompatibilityManager();
@@ -67,6 +76,8 @@ public class SubstancePlugin extends JavaPlugin {
         }));
         resourcePackManager.load();
         compatibilityManager.load();
+        commandManager.load();
+        CommandAPI.onEnable();
     }
 
     private void unloadAll()
@@ -75,7 +86,8 @@ public class SubstancePlugin extends JavaPlugin {
         resourcePackManager.unload();
         addonManager.unload();
         metrics.shutdown();
-
+        commandManager.unload();
+        CommandAPI.onDisable();
     }
 
     public void reloadAll()
@@ -107,6 +119,11 @@ public class SubstancePlugin extends JavaPlugin {
     public ResourceExtractor getResourceExtractor()
     {
         return resourceExtractor;
+    }
+
+    public SubstanceCommandManager getCommandManager()
+    {
+        return commandManager;
     }
 
     public static SubstancePlugin get()
