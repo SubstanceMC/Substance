@@ -51,5 +51,5 @@ public interface SubstanceSerializable extends ConfigurationSerializable {
         return getInstance();
     }
 
-    void postDeserialization();
+    default void postDeserialization() {}
 }

@@ -1,7 +1,6 @@
 package org.substancemc.entity.entity;
 
 import org.bukkit.inventory.ItemStack;
-import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.config.SubstanceSerializable;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.entity.SubstanceEntityAddon;
@@ -10,7 +9,6 @@ import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SubstanceEntityType implements ISubstanceEntityType, SubstanceSerializable {
 

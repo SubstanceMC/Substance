@@ -3,6 +3,7 @@ package org.substancemc.localprovider;
 import com.sun.net.httpserver.HttpServer;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.resourcepack.server.ResourcePackProvider;
+import org.substancemc.core.util.config.SubstanceSerializable;
 import org.substancemc.core.util.file.DataFolderFile;
 
 import java.io.IOException;
@@ -14,13 +15,13 @@ import java.security.MessageDigest;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class LocalPackProvider implements ResourcePackProvider {
+public class LocalPackProvider implements ResourcePackProvider, SubstanceSerializable {
 
     private transient String url;
     private transient HttpServer server;
     private transient byte[] hash;
     private transient String checksum;
-    private int port;
+    private int port = -1;
 
     public LocalPackProvider(int port)
     {
@@ -76,5 +77,15 @@ public class LocalPackProvider implements ResourcePackProvider {
     @Override
     public void onUnload() {
         server.stop(0);
+    }
+
+    @Override
+    public SubstanceSerializable getInstance() {
+        return this;
+    }
+
+    @Override
+    public void postDeserialization() {
+        if(port == -1) port = 8080;
     }
 }

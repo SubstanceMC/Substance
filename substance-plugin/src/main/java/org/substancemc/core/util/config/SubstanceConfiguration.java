@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.file.ClassInstance;
 
 import java.io.File;

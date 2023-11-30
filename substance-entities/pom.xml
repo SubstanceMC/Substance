@@ -18,6 +18,11 @@
             <artifactId>substance-plugin</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.substancemc</groupId>
+            <artifactId>substance-items</artifactId>
+            <version>0.1.0-UNUSABLE</version>
+        </dependency>
     </dependencies>
 
     <properties>

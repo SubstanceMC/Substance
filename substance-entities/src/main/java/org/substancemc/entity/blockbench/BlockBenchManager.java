@@ -1,18 +1,54 @@
 package org.substancemc.entity.blockbench;
 
+import org.bukkit.inventory.ItemStack;
 import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
 import org.substancemc.entity.blockbench.convert.BlockBenchConvertManager;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BlockBenchManager implements SubstanceManager {
     private final BlockBenchConvertManager converter = new BlockBenchConvertManager();
     private List<BlockBenchModel> modelList;
 
-    private final List<String> modelLocatorList = new ArrayList<>();
+    private final HashMap<BlockBenchModel, List<String>> modelLocatorList = new HashMap<>();
+    private final HashMap<BlockBenchModel, ArrayList<BlockBenchEntityBone>> parsedBones = new HashMap<>();
+    private final HashMap<BlockBenchModel, List<ItemStack>> parsedVisuals = new HashMap<>();
+
+    public void addVisuals(HashMap<String, ItemStack> generated)
+    {
+        generated.keySet().forEach(key -> {
+            BlockBenchModel model = getModelByLocator(key);
+            if(model == null) return;
+            List<ItemStack> visuals = parsedVisuals.getOrDefault(model, new ArrayList<>());
+            visuals.add(generated.get(key));
+            parsedVisuals.put(model, visuals);
+        });
+    }
+
+    public BlockBenchModel getModelByLocator(String locator)
+    {
+        return modelLocatorList.keySet().stream().filter(key -> modelLocatorList.getOrDefault(key, new ArrayList<>()).contains(locator)).findFirst().orElse(null);
+    }
+
+    public List<BlockBenchEntityBone> getBones(BlockBenchModel model)
+    {
+        return parsedBones.getOrDefault(model, new ArrayList<>());
+    }
+    public void registerParsedBones(BlockBenchModel model, BlockBenchEntityBone... bones)
+    {
+        ArrayList<BlockBenchEntityBone> existing = parsedBones.getOrDefault(model, new ArrayList<>());
+        existing.addAll(Arrays.asList(bones));
+        parsedBones.put(model, existing);
+    }
+
+    public void registerParsedBones(BlockBenchModel model, Collection<BlockBenchEntityBone> bones)
+    {
+        ArrayList<BlockBenchEntityBone> existing = parsedBones.getOrDefault(model, new ArrayList<>());
+        existing.addAll(bones);
+        parsedBones.put(model, existing);
+    }
 
     @Override
     public void load() {
@@ -29,12 +65,18 @@ public class BlockBenchManager implements SubstanceManager {
 
     public List<String> getModelLocators()
     {
-        return modelLocatorList;
+        List<String> toReturn = new ArrayList<>();
+        modelLocatorList.keySet().forEach(key -> {
+            toReturn.addAll(modelLocatorList.get(key));
+        });
+        return toReturn;
     }
 
-    public void addModelLocator(String locator)
+    public void addModelLocator(BlockBenchModel model, String locator)
     {
-        modelLocatorList.add(locator);
+        List<String> locators = modelLocatorList.getOrDefault(model, new ArrayList<>());
+        locators.add(locator);
+        modelLocatorList.put(model, locators);
     }
 
     public List<BlockBenchModel> getModels()

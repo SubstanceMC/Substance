@@ -1,9 +1,11 @@
 package org.substancemc.item;
 
+import org.bukkit.Bukkit;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.addon.SubstanceAddon;
 import org.substancemc.core.util.config.SubstanceConfiguration;
 import org.substancemc.item.command.ItemCommand;
+import org.substancemc.item.event.listener.SubstanceItemEventListener;
 
 public class SubstanceItemAddon implements SubstanceAddon {
     @Override
@@ -23,12 +25,15 @@ public class SubstanceItemAddon implements SubstanceAddon {
 
     private final SubstanceItemManager itemManager = new SubstanceItemManager();
 
+
     @Override
     public void load() {
         saveDefaultConfig("config_items");
         itemManager.load();
+        Bukkit.getPluginManager().registerEvents(new SubstanceItemEventListener(), SubstancePlugin.get());
         SubstancePlugin.get().getCommandManager().addSubCommand(new ItemCommand());
     }
+
 
     @Override
     public void unload() {

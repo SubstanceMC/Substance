@@ -5,7 +5,7 @@ public interface SubstanceManager {
     void unload();
     default void reload()
     {
-        load();
         unload();
+        load();
     }
 }

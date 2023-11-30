@@ -1,14 +1,18 @@
 package org.substancemc.item;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
+import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.structure.SubstanceManager;
+import org.substancemc.item.event.SubstanceItemEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SubstanceItemManager implements SubstanceManager {
 
-    private final List<SubstanceItem> registeredItems = new ArrayList<>();
+    private final List<SubstanceItemType> registeredItemTypes = new ArrayList<>();
 
     @Override
     public void load() {
@@ -16,29 +20,45 @@ public class SubstanceItemManager implements SubstanceManager {
         ConfigurationSection section = SubstanceItemAddon.get().getItemConfig().getConfigurationSection("");
         assert section != null;
         section.getKeys(false).forEach(key -> {
-            registeredItems.add(SubstanceItemAddon.get().getItemConfig().getSubstanceObject(key, SubstanceItem.class));
+            registeredItemTypes.add(SubstanceItemAddon.get().getItemConfig().getSubstanceObject(key, SubstanceItemType.class));
         });
     }
 
-    public void registerExternalItem(SubstanceItem item)
+    public void registerExternalItemType(SubstanceItemType item)
     {
-
+        registeredItemTypes.add(item);
     }
 
     @Override
     public void unload() {
-        registeredItems.clear();
+        registeredItemTypes.clear();
     }
 
-    public List<SubstanceItem> getRegisteredItems()
+    public List<SubstanceItemType> getRegisteredItemTypes()
     {
-        return registeredItems;
+        return registeredItemTypes;
     }
 
-    public List<String> getRegisteredItemIds()
+    public SubstanceItemType getRegisteredItemTypeById(String id)
     {
+        return registeredItemTypes.stream().filter(itemType -> itemType.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public SubstanceItemType getRegisteredItemTypeByItem(ItemStack itemStack)
+    {
+        return registeredItemTypes.stream().filter(itemType -> itemType.getMaterial() == itemStack.getType() && itemType.getCustomModelData() == itemStack.getItemMeta().getCustomModelData()).findAny().orElse(null);
+    }
+
+    public boolean isSubstanceItem(ItemStack itemStack)
+    {
+        return registeredItemTypes.stream().anyMatch(itemType -> itemType.getMaterial() == itemStack.getType() && itemType.getCustomModelData() == itemStack.getItemMeta().getCustomModelData());
+    }
+
+    public List<String> getRegisteredItemTypeIds()
+    {
+        SubstancePlugin.get().getLogger().severe("Called");
         List<String> itemIds = new ArrayList<>();
-        registeredItems.forEach(item -> itemIds.add(item.getId()));
+        registeredItemTypes.forEach(item -> itemIds.add(item.getId()));
         return itemIds;
     }
 }

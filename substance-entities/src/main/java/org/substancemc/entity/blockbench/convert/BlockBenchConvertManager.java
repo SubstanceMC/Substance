@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BlockBenchConvertManager {
 
-    private BlockBenchConvertFixer fixer = new BlockBenchConvertFixer();
+    private final BlockBenchConvertFixer fixer = new BlockBenchConvertFixer();
     public List<BlockBenchModel> convertAll(File directory)
     {
         List<BlockBenchModel> converted = new ArrayList<>();

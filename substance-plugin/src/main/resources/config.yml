@@ -1,4 +1,5 @@
 resourcePack:
   modelMaterial: LEATHER_HORSE_ARMOR # Any material not used by other plugins
-entity:
-  hurtColor: true
+  server:
+    localProvider:
+      port: 8080

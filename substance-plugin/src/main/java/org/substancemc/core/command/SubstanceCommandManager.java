@@ -12,12 +12,15 @@ public class SubstanceCommandManager implements SubstanceManager {
 
     @Override
     public void load() {
-        new CommandAPICommand("substance")
+        CommandAPICommand substanceCommand = new CommandAPICommand("substance")
                 .withAliases("st")
                 .withAliases("sbs")
-                .withPermission("substance.command")
-                .withSubcommands(subCommands.toArray(new CommandAPICommand[0]))
-                .register();
+                .withPermission("substance.command");
+        if(!subCommands.isEmpty())
+        {
+            substanceCommand.withSubcommands(subCommands.toArray(new CommandAPICommand[0]));
+            substanceCommand.register();
+        }
     }
 
     public void addSubCommand(SubstanceCommandHolder commandHolder)

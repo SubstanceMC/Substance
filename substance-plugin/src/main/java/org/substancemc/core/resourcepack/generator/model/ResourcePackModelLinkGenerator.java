@@ -1,6 +1,8 @@
 package org.substancemc.core.resourcepack.generator.model;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.resourcepack.ResourcePackFile;
 import org.substancemc.core.resourcepack.generator.GeneratorPreProcessor;
@@ -9,6 +11,7 @@ import org.substancemc.core.resourcepack.structure.minecraft.model.ResourcePackM
 import org.substancemc.core.util.gson.GsonFileParser;
 import org.substancemc.core.util.gson.GsonFileWriter;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ResourcePackModelLinkGenerator implements ResourcePackGenerator<List<String>, List<String>>, GeneratorPreProcessor<List<String>, List<String>> {
@@ -43,6 +46,23 @@ public class ResourcePackModelLinkGenerator implements ResourcePackGenerator<Lis
         }
         new GsonFileWriter<ResourcePackModelLink>().write(file.getFile(), link);
         return link;
+    }
+
+    public HashMap<String, ItemStack> generateWithContextReturn(List<String> context)
+    {
+        HashMap<String, ItemStack> toReturn = new HashMap<>();
+        ResourcePackModelLink link = generateWithReturn(context);
+        for(int i = 0; i < context.size(); i++)
+        {
+            int modelData = link.getOverrides()[i].getPredicate().getCustomModelData();
+            ItemStack returned = new ItemStack(link.getMaterial());
+            ItemMeta meta = returned.getItemMeta();
+            meta.setCustomModelData(modelData);
+            returned.setItemMeta(meta);
+
+            toReturn.put(context.get(i), returned);
+        }
+        return toReturn;
     }
 
     @Override

@@ -24,13 +24,13 @@ public class BlockBenchModelGeneratorPreProcessor implements GeneratorPreProcess
             ResourcePackModel defaultModel = new BlockBenchResourcePackModel(entry.getValue(), abstractModelResourceLocator, model, false);
             ResourcePackModelFile defaultModelFile = new ResourcePackModelFile(String.format("entity/%s/default/%s.json", model.getModelIdentifier(), entry.getKey().getName().toLowerCase().replace(" ", "_").replace("-", "_")));
             processed.put(defaultModelFile, defaultModel);
-            SubstanceEntityAddon.get().getBlockBenchManager().addModelLocator(defaultModelFile.getResourceLocator());
+            SubstanceEntityAddon.get().getBlockBenchManager().addModelLocator(model, defaultModelFile.getResourceLocator());
             if(SubstanceEntityAddon.get().isHurtColorEnabled())
             {
                 ResourcePackModel hurtModel = new BlockBenchResourcePackModel(entry.getValue(), abstractModelResourceLocator, model, true);
                 ResourcePackModelFile hurtModelFile = new ResourcePackModelFile(String.format("entity/%s/hurt/%s.json", model.getModelIdentifier(), entry.getKey().getName().toLowerCase().replace(" ", "_").replace("-", "_")));
                 processed.put(hurtModelFile, hurtModel);
-                SubstanceEntityAddon.get().getBlockBenchManager().addModelLocator(hurtModelFile.getResourceLocator());
+                SubstanceEntityAddon.get().getBlockBenchManager().addModelLocator(model, hurtModelFile.getResourceLocator());
             }
         });
         return processed;
