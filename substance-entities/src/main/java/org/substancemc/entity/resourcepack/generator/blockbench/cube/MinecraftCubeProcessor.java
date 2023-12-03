@@ -1,6 +1,7 @@
 package org.substancemc.entity.resourcepack.generator.blockbench.cube;
 
 import org.jetbrains.annotations.ApiStatus;
+import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.resourcepack.generator.GeneratorPreProcessor;
 import org.substancemc.core.resourcepack.structure.minecraft.model.ModelElementFacingInformation;
 import org.substancemc.core.resourcepack.structure.substance.ResourcePackModel;
@@ -12,6 +13,7 @@ import org.substancemc.entity.blockbench.structure.element.BlockBenchModelCube;
 import org.substancemc.entity.resourcepack.generator.blockbench.model.BlockBenchResourcePackModel;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<BlockBenchModelBone, List<BlockBenchModelCube>>, ResourcePackModel> {
 
@@ -21,7 +23,6 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
     {
         this.blockBenchModel = model;
     }
-
     @ApiStatus.Experimental
     @Override
     public ResourcePackModel process(Map.Entry<BlockBenchModelBone, List<BlockBenchModelCube>> structureElement) {
@@ -33,7 +34,6 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
         for(ResourcePackModelCube cube : model.getElements()) updateUV(this.blockBenchModel, cube);
         return model;
     }
-
     private Map<String, String> extractTextures(List<BlockBenchModelCube> childGroup)
     {
         Map<String, String> textures = new HashMap<>();
@@ -48,16 +48,12 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
         });
         return textures;
     }
-
-
     private void generateResourcePackElements(List<BlockBenchModelCube> childGroup, ResourcePackModel model)
     {
         ResourcePackModelCube[] cubes = new ResourcePackModelCube[childGroup.size()];
         for(int i = 0; i < cubes.length; i++) cubes[i] = new ResourcePackModelCube(childGroup.get(i));
         model.setElements(cubes);
-
     }
-
     @ApiStatus.Experimental
     private void portToOrigin(List<BlockBenchModelCube> childGroup, BlockBenchModelBone parent, ResourcePackModel model)
     {
@@ -133,6 +129,7 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
         double[] offset = new double[]{0, 0, 0};
         preFixCubes(cubes, offset);
         boolean from, to;
+
         Iterator<ResourcePackModelCube> normalizeIterator = Arrays.stream(cubes).iterator();
         do {
             if(!normalizeIterator.hasNext()) {
@@ -146,7 +143,6 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
             from = normalized.checkFrom();
             to = normalized.checkTo();
         } while(from && to);
-
         return shrinkLarge(cubes, model);
     }
 
@@ -155,6 +151,7 @@ public class MinecraftCubeProcessor implements GeneratorPreProcessor<Map.Entry<B
     {
         double[] offset = new double[]{0, 0, 0};
         preFixCubes(cubes, offset);
+        model.setOffset(offset);
         shrinkOrigin(cubes, offset);
         resetScaleForDisplay(model, offset, 3.7333333);
         return false;

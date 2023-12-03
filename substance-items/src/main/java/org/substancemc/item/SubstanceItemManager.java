@@ -4,6 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.util.structure.SubstanceManager;
+import org.substancemc.item.command.ItemCommand;
 import org.substancemc.item.event.SubstanceItemEvent;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SubstanceItemManager implements SubstanceManager {
     public void registerExternalItemType(SubstanceItemType item)
     {
         registeredItemTypes.add(item);
+        ItemCommand.update();
     }
 
     @Override
@@ -56,7 +58,6 @@ public class SubstanceItemManager implements SubstanceManager {
 
     public List<String> getRegisteredItemTypeIds()
     {
-        SubstancePlugin.get().getLogger().severe("Called");
         List<String> itemIds = new ArrayList<>();
         registeredItemTypes.forEach(item -> itemIds.add(item.getId()));
         return itemIds;

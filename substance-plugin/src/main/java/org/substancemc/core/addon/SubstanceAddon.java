@@ -14,7 +14,6 @@ public interface SubstanceAddon extends SubstanceManager {
 
     String getVersion();
     String getId();
-
     default AddonSnippet<?, ?>[] getSnippets()
     {
         return new AddonSnippet[0];

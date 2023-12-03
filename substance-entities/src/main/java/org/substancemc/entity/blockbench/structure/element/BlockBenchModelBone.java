@@ -12,6 +12,24 @@ public class BlockBenchModelBone {
 
     private String name;
     private double[] origin;
+
+    private double[] rotation;
+
+    public double[] getRotation()
+    {
+        return rotation;
+    }
+    private transient double[] offset;
+
+    public double[] getOffset()
+    {
+        return offset;
+    }
+
+    public void setOffset(double[] offset)
+    {
+        this.offset = offset;
+    }
     private int color;
     private String uuid;
 

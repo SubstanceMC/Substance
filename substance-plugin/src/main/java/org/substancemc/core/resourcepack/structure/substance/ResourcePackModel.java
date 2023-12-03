@@ -5,10 +5,21 @@ import java.util.Map;
 
 public class ResourcePackModel {
     private int[] texture_size;
+    private transient double[] offset;
     private Map<String, String> textures;
     private ResourcePackModelCube[] elements;
 
     private String parent;
+
+    public double[] getOffset()
+    {
+        return offset;
+    }
+
+    public void setOffset(double[] offset)
+    {
+        this.offset = offset;
+    }
 
     private Map<String, ResourcePackModelCubeDisplay> display;
 

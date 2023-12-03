@@ -6,10 +6,19 @@ public class BlockBenchVector extends Vector3d {
 
     public BlockBenchVector(double[] xyz)
     {
-        super(xyz[0], xyz[1], xyz[2]);
+        if(xyz == null || xyz.length < 3) {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            return;
+        }
+        this.x = xyz[0];
+        this.y =  xyz[1];
+        this.z = xyz[2];
     }
 
     public BlockBenchVector() {
+        super();
     }
 
     public double[] toArray()

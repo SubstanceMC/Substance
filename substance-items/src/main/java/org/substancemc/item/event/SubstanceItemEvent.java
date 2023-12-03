@@ -19,7 +19,7 @@ public class SubstanceItemEvent<T extends Event> extends Event implements Cancel
     {
         this.context = context;
         this.item = item;
-        SubstancePlugin.get().getAddonManager().callMatchingSnippets(item, item.getType().getId(), getClass());
+        SubstancePlugin.get().getAddonManager().callMatchingSnippets(this, item.getType().getId(), getClass());
     }
 
     public T getContext()

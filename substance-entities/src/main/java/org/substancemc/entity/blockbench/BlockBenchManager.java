@@ -5,6 +5,7 @@ import org.substancemc.core.util.file.DataFolderFile;
 import org.substancemc.core.util.structure.SubstanceManager;
 import org.substancemc.entity.blockbench.convert.BlockBenchConvertManager;
 import org.substancemc.entity.blockbench.structure.BlockBenchModel;
+import org.substancemc.entity.blockbench.structure.element.BlockBenchModelBone;
 
 import java.util.*;
 
@@ -13,18 +14,17 @@ public class BlockBenchManager implements SubstanceManager {
     private List<BlockBenchModel> modelList;
 
     private final HashMap<BlockBenchModel, List<String>> modelLocatorList = new HashMap<>();
+    private final HashMap<BlockBenchModelBone, List<String>> boneLocatorList = new HashMap<>();
     private final HashMap<BlockBenchModel, ArrayList<BlockBenchEntityBone>> parsedBones = new HashMap<>();
-    private final HashMap<BlockBenchModel, List<ItemStack>> parsedVisuals = new HashMap<>();
-
-    public void addVisuals(HashMap<String, ItemStack> generated)
+    public void addBoneLocator(BlockBenchModelBone bone, String locator)
     {
-        generated.keySet().forEach(key -> {
-            BlockBenchModel model = getModelByLocator(key);
-            if(model == null) return;
-            List<ItemStack> visuals = parsedVisuals.getOrDefault(model, new ArrayList<>());
-            visuals.add(generated.get(key));
-            parsedVisuals.put(model, visuals);
-        });
+        List<String> locators = boneLocatorList.getOrDefault(bone, new ArrayList<>());
+        locators.add(locator);
+        boneLocatorList.put(bone, locators);
+    }
+    public BlockBenchModelBone getBoneByLocator(String locator)
+    {
+        return boneLocatorList.keySet().stream().filter(key -> boneLocatorList.getOrDefault(key, new ArrayList<>()).contains(locator)).findFirst().orElse(null);
     }
 
     public BlockBenchModel getModelByLocator(String locator)

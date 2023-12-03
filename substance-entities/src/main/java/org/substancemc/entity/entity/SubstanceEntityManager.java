@@ -7,6 +7,7 @@ import org.substancemc.entity.SubstanceEntityAddon;
 import org.substancemc.entity.entity.spawnegg.SpawnEggManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SubstanceEntityManager implements SubstanceManager {
@@ -14,6 +15,8 @@ public class SubstanceEntityManager implements SubstanceManager {
     private final List<SubstanceEntityType> entityTypes = new ArrayList<>();
 
     private final SpawnEggManager spawnEggManager = new SpawnEggManager();
+
+    private final List<SubstanceEntity> entities = new ArrayList<>();
 
 
 
@@ -35,11 +38,25 @@ public class SubstanceEntityManager implements SubstanceManager {
         return entityTypes;
     }
 
+    public SubstanceEntityType getEntityTypeById(String id)
+    {
+        return entityTypes.stream().filter(entityType -> entityType.getId().equals(id)).findAny().orElse(null);
+    }
+
     public SpawnEggManager getSpawnEggManager()
     {
         return spawnEggManager;
     }
 
+    public void registerEntities(SubstanceEntity... entities)
+    {
+        this.entities.addAll(Arrays.stream(entities).toList());
+    }
+
+    public List<SubstanceEntity> getEntities()
+    {
+        return entities;
+    }
 
     @Override
     public void unload() {

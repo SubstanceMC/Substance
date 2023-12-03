@@ -1,6 +1,5 @@
 package org.substancemc.core.addon;
 
-import org.bukkit.Bukkit;
 import org.substancemc.core.SubstancePlugin;
 import org.substancemc.core.addon.snippet.AddonSnippet;
 import org.substancemc.core.addon.snippet.AddonSnippetManager;
@@ -9,7 +8,6 @@ import org.substancemc.core.util.structure.SubstanceManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class AddonManager implements SubstanceManager, AddonSnippetManager {
@@ -29,6 +27,7 @@ public class AddonManager implements SubstanceManager, AddonSnippetManager {
         SubstanceAddon addon = loader.load(file);
         if(addon == null) return null;
         addonList.add(addon);
+        loadAddon(addon);
         return addon;
     }
 

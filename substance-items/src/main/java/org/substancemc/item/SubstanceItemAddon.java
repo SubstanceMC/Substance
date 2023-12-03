@@ -34,7 +34,6 @@ public class SubstanceItemAddon implements SubstanceAddon {
         SubstancePlugin.get().getCommandManager().addSubCommand(new ItemCommand());
     }
 
-
     @Override
     public void unload() {
         itemManager.unload();
